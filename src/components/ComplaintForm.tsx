@@ -33,6 +33,7 @@ const ComplaintForm = ({ userId, complaint, onSuccess }: ComplaintFormProps) => 
     e.preventDefault();
     setLoading(true);
 
+
     if (complaint) {
       // Update existing complaint
       const { error } = await supabase
@@ -51,7 +52,7 @@ const ComplaintForm = ({ userId, complaint, onSuccess }: ComplaintFormProps) => 
           title: "Success",
           description: "Complaint updated successfully",
         });
-        onSuccess();
+        if (onSuccess) onSuccess();
       }
     } else {
       // Create new complaint
@@ -74,8 +75,10 @@ const ComplaintForm = ({ userId, complaint, onSuccess }: ComplaintFormProps) => 
         });
         setTitle("");
         setDescription("");
-        onSuccess();
+
+        if (onSuccess) onSuccess();
       }
+
     }
 
     setLoading(false);
