@@ -16,15 +16,8 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        navigate("/dashboard");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+  // Removed auto-redirect on session detection
+  // Auth page now always shows login/signup forms
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,8 +45,9 @@ const Auth = () => {
     } else {
       toast({
         title: "Success!",
-        description: "Account created successfully. You can now log in.",
+        description: "Account created successfully. Redirecting...",
       });
+      navigate("/dashboard");
     }
   };
 
@@ -74,6 +68,8 @@ const Auth = () => {
         description: error.message,
         variant: "destructive",
       });
+    } else {
+      navigate("/dashboard");
     }
   };
 
