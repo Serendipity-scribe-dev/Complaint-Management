@@ -67,8 +67,18 @@ const Dashboard = () => {
   }, [navigate]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    navigate("/auth");
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      // Clear local storage and navigate
+      localStorage.clear();
+      navigate("/auth", { replace: true });
+    }
   };
 
   if (loading) {

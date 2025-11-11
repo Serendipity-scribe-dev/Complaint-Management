@@ -46,7 +46,9 @@ const Index = () => {
         <Button
           size="lg"
           className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-3 rounded-lg shadow-md transition-all duration-300"
-          onClick={() => (window.location.href = "/auth")}
+          onClick={() => {
+            window.location.href = "/auth";
+          }}
         >
           Get Started
         </Button>
